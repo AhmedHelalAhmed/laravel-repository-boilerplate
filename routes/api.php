@@ -20,4 +20,28 @@ $api->version('v1', function ($api) {
         return 'Hello World!';
     });
 
+    $api->group(['namespace' => 'App\Http\Controllers\API'], function() use ($api) {
+        
+        /* Global Routes */
+        $api->get('/', 'APIController@info');
+        $api->get('info', 'APIController@info');
+
+        /* User */
+        $api->group(['prefix' => 'user'], function() use ($api) {
+            /* GET */
+            $api->get('/', 'UserController@index');
+            $api->get('index', 'UserController@index');
+
+            /* POST */
+            $api->post('create', 'UserController@create');
+
+            /* PUT */
+            $api->put('update/{id}', 'UserController@update');
+
+            /* DELETE */
+            $api->delete('delete/{id}', 'UserController@delete');
+        });
+
+    });
+
 });
