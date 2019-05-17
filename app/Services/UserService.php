@@ -13,49 +13,43 @@ class UserService
 
     public function index()
     {
-        try {
-            $users = $this->user->index();
+        $users = $this->user->index();
 
-            return $users;
-        }
-        catch (\Exception $e) {
-            return $e;
-        }
+        return $users;
     }
 
     public function create($data)
     {
-        try {
-            $user = $this->user->create($data);
+        $user = $this->user->create($data);
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $user;
-        }
+        return $user;
     }
 
     public function update($data, $id)
     {
-        try {
-            $user = $this->user->update($data, $id);
+        $user = $this->user->update($data, $id);
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $e;
-        }
+        return $user;
     }
 
     public function delete($id)
     {
-        try {
-            $user = $this->user->delete($id);
+        $user = $this->user->delete($id);
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $e;
-        }
+        return $user;
+    }
+
+    public function withTrashed()
+    {
+        $users = $this->user->withTrashed();
+
+        return $users;
+    }
+
+    public function onlyTrashed()
+    {
+        $users = $this->user->onlyTrashed();
+
+        return $users;
     }
 }

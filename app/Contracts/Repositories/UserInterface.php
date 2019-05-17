@@ -15,4 +15,8 @@ interface UserInterface {
     public function update($data, $id);
 
     public function delete($id);
+
+    public function withTrashed();
+
+    public function onlyTrashed();
 }

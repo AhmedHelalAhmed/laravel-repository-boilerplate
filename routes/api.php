@@ -16,12 +16,12 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
+    /* Hello World */
     $api->get('hello', function() {
         return 'Hello World!';
     });
 
     $api->group(['namespace' => 'App\Http\Controllers\API'], function() use ($api) {
-        
         /* Global Routes */
         $api->get('/', 'APIController@info');
         $api->get('info', 'APIController@info');
@@ -31,6 +31,10 @@ $api->version('v1', function ($api) {
             /* GET */
             $api->get('/', 'UserController@index');
             $api->get('index', 'UserController@index');
+            $api->get('trashed/with', 'UserController@withTrashed');
+            $api->get('trashed/with/index', 'UserController@withTrashed');
+            $api->get('trashed/only', 'UserController@onlyTrashed');
+            $api->get('trashed/only/index', 'UserController@onlyTrashed');
 
             /* POST */
             $api->post('create', 'UserController@create');
@@ -42,6 +46,6 @@ $api->version('v1', function ($api) {
             $api->delete('delete/{id}', 'UserController@delete');
         });
 
-    });
+    }); // End namespace group.
 
-});
+}); // End $api->version.

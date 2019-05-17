@@ -21,7 +21,7 @@ class UserController extends APIController
             return $this->responseJson($users, 200);
         }
         catch (\Exception $e) {
-            return $this->responseJson($e, 400);
+            return $this->responseJson($e->getMessage(), 400);
         }
     }
 
@@ -33,7 +33,7 @@ class UserController extends APIController
             return $this->responseJson($user, 200);
         }
         catch(\Exception $e) {  
-            return $this->responseJson($e, 400);
+            return $this->responseJson($e->getMessage(), 400);
         }
     }
 
@@ -47,7 +47,7 @@ class UserController extends APIController
             return $this->responseJson($user, 200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e, 400);
+            return $this->responseJson($e->getMessage(), 400);
         }
     }
 
@@ -59,7 +59,33 @@ class UserController extends APIController
             return $this->responseJson($user, 200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e, 400);
+            return $this->responseJson($e->getMessage(), 400);
+        }
+    }
+
+    /** api/user/trashed/with/index */
+    public function withTrashed()
+    {
+        try {
+            $users = $this->user->withTrashed();
+
+            return $users;
+        }
+        catch(\Exception $e) {
+            return $this->responseJson($e->getMessage(), 400);
+        }
+    }
+
+    /** api/user/trashed/only/index */
+    public function onlyTrashed()
+    {
+        try {
+            $users = $this->user->onlyTrashed();
+
+            return $users;
+        }
+        catch(\Exception $e) {
+            return $this->responseJson($e->getMessage(), 400);
         }
     }
 }

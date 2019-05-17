@@ -15,55 +15,47 @@ class UserRepository implements UserInterface
 
     public function index()
     {
-        try {
-            return $this->user->all();
-        }
-        catch (\Exception $e) {
-            return $e;
-        }
+        return $this->user->all();
     }
 
     public function create($data)
     {
-        try {
-            $user = $this->user->create($data);
+        $user = $this->user->create($data);
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $e;
-        }
+        return $user;
     }
 
     public function update($data, $id)
     {
-        try {
-            $source = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => $data['password']
-            ];
+        $data = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password']
+        ];
 
-            $user = $this->user->where('id', $id)->update($source);
+        $user = $this->user->where('id', $id)->update($data);
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $e;
-        }
+        return $user;
     }
 
     public function delete($id)
     {
-        try{
-            $user = $this->user->where('id', $id)->softDeletes();
+        $user = $this->user->where('id', $id)->delete();
 
-            dd(1);
+        return $user;
+    }
 
-            return $user;
-        }
-        catch(\Exception $e) {
-            return $e;
-        }
+    public function withTrashed()
+    {
+        $users = $this->user->withTrashed()->get();
+
+        return $users;
+    }
+
+    public function onlyTrashed()
+    {
+        $users = $this->user->onlyTrashed()->get();
+
+        return $users;
     }
 }
