@@ -52,4 +52,11 @@ class UserService
 
         return $users;
     }
+
+    public function destroy($id)
+    {
+        $user = $this->user->destroy($id);
+
+        return $user;
+    }
 }

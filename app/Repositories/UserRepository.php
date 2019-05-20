@@ -2,20 +2,29 @@
 
 namespace App\Repositories;
 
-use Illuminate\Container\Container as Application;
-use App\Contracts\Repositories\UserInterface as UserInterface;
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+use App\Transformers\UserTransformer;
+
 use App\Entities\User;
+use App\Contracts\Repositories\UserInterface;
 
 class UserRepository implements UserInterface
 {
-    public function __construct(User $user)
+    public function __construct(Manager $fractal, UserTransformer $transform, User $user)
     {
-        $this->user = $user;
+        $this->fractal      = $fractal;
+        $this->transform    = $transform;
+        $this->user         = $user;
     }
 
     public function index()
     {
-        return $this->user->all();
+        $users = $this->user->all();
+        $users = new Collection($users, $this->transform);
+        $users = $this->fractal->createData($users);
+
+        return $users->toArray();
     }
 
     public function create($data)
@@ -55,6 +64,13 @@ class UserRepository implements UserInterface
     public function onlyTrashed()
     {
         $users = $this->user->onlyTrashed()->get();
+
+        return $users;
+    }
+
+    public function destroy($id)
+    {
+        $users = $this->user->destroy($ids);
 
         return $users;
     }

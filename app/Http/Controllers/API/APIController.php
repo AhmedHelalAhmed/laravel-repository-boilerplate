@@ -19,7 +19,7 @@ class APIController extends BaseController
             'name' => config('api.name'),
             'version' => config('api.version'),
             'gd' => (function_exists('gd_info')) ? gd_info() : 'No gd_info',
-            'imagick' => (extension_loaded('imagick'))? 'Imagick Loaded' : 'Imagick not installed',
+            'imagick' => (extension_loaded('imagick')) ? 'Imagick Loaded' : 'Imagick not installed',
         ]]);
     }
 }

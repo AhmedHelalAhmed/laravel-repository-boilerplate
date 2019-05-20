@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Controllers\API\APIController;
 
+/**
+ * Methods List
+ * Index
+ * Create
+ * Update
+ * Delete
+ * Destroy
+ */
 class UserController extends APIController
 {
     public function __construct(UserService $user)
@@ -17,6 +25,7 @@ class UserController extends APIController
     {
         try {
             $users = $this->user->index();
+            $users = $users['data'];
 
             return $this->responseJson($users, 200);
         }
@@ -63,26 +72,36 @@ class UserController extends APIController
         }
     }
 
-    /** api/user/trashed/with/index */
-    public function withTrashed()
+    public function destroy($id)
     {
         try {
-            $users = $this->user->withTrashed();
+            $user = $this->user->destroy($id);
 
-            return $users;
+            return $this->responseJson($user, 200);
         }
         catch(\Exception $e) {
             return $this->responseJson($e->getMessage(), 400);
         }
     }
 
-    /** api/user/trashed/only/index */
+    public function withTrashed()
+    {
+        try {
+            $users = $this->user->withTrashed();
+
+            return $this->responseJson($users, 200);
+        }
+        catch(\Exception $e) {
+            return $this->responseJson($e->getMessage(), 400);
+        }
+    }
+
     public function onlyTrashed()
     {
         try {
             $users = $this->user->onlyTrashed();
 
-            return $users;
+            return $this->responseJson($users, 200);
         }
         catch(\Exception $e) {
             return $this->responseJson($e->getMessage(), 400);
