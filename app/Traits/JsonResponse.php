@@ -1,5 +1,6 @@
 <?php
 
+/** This trait is unused. */
 namespace App\Traits;
 
 trait JsonResponse

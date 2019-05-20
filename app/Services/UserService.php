@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+/* User Dependencies */
 use App\Contracts\Repositories\UserInterface;
 
 class UserService

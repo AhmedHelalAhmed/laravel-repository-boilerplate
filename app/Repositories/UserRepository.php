@@ -2,29 +2,22 @@
 
 namespace App\Repositories;
 
-use League\Fractal\Manager;
-use League\Fractal\Resource\Collection;
-use App\Transformers\UserTransformer;
-
+/* User Dependencies */
 use App\Entities\User;
 use App\Contracts\Repositories\UserInterface;
 
 class UserRepository implements UserInterface
 {
-    public function __construct(Manager $fractal, UserTransformer $transform, User $user)
+    public function __construct(User $user)
     {
-        $this->fractal      = $fractal;
-        $this->transform    = $transform;
-        $this->user         = $user;
+        $this->user = $user;
     }
 
     public function index()
     {
-        $users = $this->user->all();
-        $users = new Collection($users, $this->transform);
-        $users = $this->fractal->createData($users);
+        $users = $this->user->paginate(25);
 
-        return $users->toArray();
+        return $users;
     }
 
     public function create($data)
@@ -70,7 +63,7 @@ class UserRepository implements UserInterface
 
     public function destroy($id)
     {
-        $users = $this->user->destroy($ids);
+        $users = $this->user->where('id', $id)->destroy();
 
         return $users;
     }

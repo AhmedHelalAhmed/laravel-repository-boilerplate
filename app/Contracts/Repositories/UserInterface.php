@@ -2,13 +2,12 @@
 
 namespace App\Contracts\Repositories;
 
-use League\Fractal\Manager;
-use App\Transformers\UserTransformer;
+/* User Dependencies */
 use App\Entities\User;
 
 interface UserInterface {
     
-    public function __construct(Manager $fractal, UserTransformer $transform, User $user);
+    public function __construct(User $user);
 
     public function index();
 

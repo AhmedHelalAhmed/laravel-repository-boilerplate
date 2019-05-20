@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Services\UserService;
+/* User Dependencies */
 use App\Http\Controllers\API\APIController;
+use App\Services\UserService;
+use App\Transformers\UserTransformer;
 
 /**
  * Methods List
- * Index
- * Create
- * Update
- * Delete
- * Destroy
+ * - Index
+ * - Create
+ * - Update
+ * - Delete
+ * - Destroy
+ * - withTrashed
+ * - onlyTrashed
  */
 class UserController extends APIController
 {
@@ -25,12 +28,11 @@ class UserController extends APIController
     {
         try {
             $users = $this->user->index();
-            $users = $users['data'];
 
-            return $this->responseJson($users, 200);
+            return $this->response->paginator($users, new UserTransformer)->setStatusCode(200);
         }
         catch (\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -39,10 +41,10 @@ class UserController extends APIController
         try {
             $user = $this->user->create($request->all());
 
-            return $this->responseJson($user, 200);
+            return $this->response->array($user)->setStatusCode(200);
         }
         catch(\Exception $e) {  
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -53,10 +55,10 @@ class UserController extends APIController
 
             $user = $this->user->update($data, $id);
 
-            return $this->responseJson($user, 200);
+            return $this->response->array($user)->setStatusCode(200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -65,10 +67,10 @@ class UserController extends APIController
         try {
             $user = $this->user->delete($id);
 
-            return $this->responseJson($user, 200);
+            return $this->response->array($user)->setStatusCode(200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -77,10 +79,10 @@ class UserController extends APIController
         try {
             $user = $this->user->destroy($id);
 
-            return $this->responseJson($user, 200);
+            return $this->response->array($user)->setStatusCode(200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -89,10 +91,10 @@ class UserController extends APIController
         try {
             $users = $this->user->withTrashed();
 
-            return $this->responseJson($users, 200);
+            return $this->response->array($users)->setStatusCode(200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 
@@ -101,10 +103,10 @@ class UserController extends APIController
         try {
             $users = $this->user->onlyTrashed();
 
-            return $this->responseJson($users, 200);
+            return $this->response->array($users)->setStatusCode(200);
         }
         catch(\Exception $e) {
-            return $this->responseJson($e->getMessage(), 400);
+            return $this->response->error($e->getMessage(), 400);
         }
     }
 }
