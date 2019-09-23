@@ -8,6 +8,8 @@ use App\Contracts\Repositories\UserInterface;
 
 class UserRepository implements UserInterface
 {
+    protected $user;
+
     public function __construct(User $user)
     {
         $this->user = $user;
